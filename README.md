@@ -86,8 +86,8 @@ Usage: puttygen ( keyfile | -t type [ -b bits ] )
 
 This files come from putty 0.76 source 
 
-<https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html>
-<https://the.earth.li/~sgtatham/putty/latest/putty-0.76.tar.gz>
+* <https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html>
+* <https://the.earth.li/~sgtatham/putty/latest/putty-0.76.tar.gz>
 
 Download the Package and Expand it in `cygwin shell`
 
