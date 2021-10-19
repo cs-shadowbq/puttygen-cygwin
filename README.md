@@ -20,10 +20,12 @@ The release includes two files:
 ## Why do this?
 
  `puttygen` is a completely different tool on unix, and homebrew (macOS) than it is on Windows. 
- 
+
+
+
 Even the cygwin makefile is designed to compile the windows UI version. Putty has many `Makefile` for each of the diferent architectures and platforms.
 
-Cygwin requires the use of the `mgw` environment, but it doesnt map well to standard windows. By add the drop-in replacement of `cygwin` with `cygnal` you can run the command from the windows or powershell terminal.
+Cygwin requires the use of the `mgw` environment, but it doesnt map well to standard windows. By add the drop-in replacement of `cygwin` with [`cygnal`](http://www.kylheku.com/cygnal/) you can run the command from the windows or powershell terminal.
 
 Note: Why not use WSL2? WSL2 does not work in Amazon EC2 or other virtual environments easily off the shelf.
 
