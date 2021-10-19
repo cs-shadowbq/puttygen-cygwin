@@ -160,7 +160,7 @@ ReRun installer Selecting packages
 * cygwin-devel ~> 3.2.0-1
 * gcc-core     ~> 10.2.0-1
 * make         ~> 4.3-1
-* zip 
+* zip          ~> 3.0-12
 
 ```
 $ cygcheck -c
