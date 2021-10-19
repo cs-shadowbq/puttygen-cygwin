@@ -96,13 +96,12 @@ $ cd ~
 $ mkdir sandbox && cd sandbox
 $ curl -O -J -L https://the.earth.li/~sgtatham/putty/latest/putty-0.76.tar.gz
 $ tar zxvf putty-0.76.tar.gz
-$ cd ~/sandbox/putty-0.76/unix
 ```
 
 Compile `puttygen` from the unix folder `Makefile.ux`, not the cygwin folder.
 
 ```
-Administrator@SE-SMM-RDP ~/sandbox/putty-0.76/unix
+$ cd ~/sandbox/putty-0.76/unix
 $ make -f Makefile.ux puttygen
 cc  -O2 -Wall -std=gnu99 -Wvla -g -I.././ -I../charset/ -I../windows/ -I../unix/ -D _FILE_OFFSET_BITS=64  -c ../cmdgen.c
 cc -o puttygen cmdgen.o conf.o console.o ecc.o import.o marshal.o \
@@ -119,10 +118,7 @@ cc -o puttygen cmdgen.o conf.o console.o ecc.o import.o marshal.o \
 Validate the file and copy it to Windows User space
 
 ```
-Administrator@SE-SMM-RDP ~/sandbox/putty-0.76/unix
 $ cp ./puttygen.exe /cygdrive/c/Users/Administrator/
-
-Administrator@SE-SMM-RDP ~/sandbox/putty-0.76/unix
 $ ldd /cygdrive/c/Users/Administrator/puttygen.exe
         ntdll.dll => /cygdrive/c/Windows/SYSTEM32/ntdll.dll (0x7ff95d650000)
         KERNEL32.DLL => /cygdrive/c/Windows/System32/KERNEL32.DLL (0x7ff95d430000)
@@ -133,8 +129,7 @@ $ ldd /cygdrive/c/Users/Administrator/puttygen.exe
 Download the pre-built binary for 2.90x support of Cygnal and rename it for reference loading
 
 ```
-$  cd /cygdrive/c/Users/Administrator/
-Administrator@SE-SMM-RDP /cygdrive/c/Users/Administrator
+$ cd /cygdrive/c/Users/Administrator/
 $ curl -O -J -L http://www.kylheku.com/cygnal/cygwin1-2-8-99-98-64bit.dll
 $ mv cygwin1-2-8-99-98-64bit.dll cygwin1.dll
 ```
