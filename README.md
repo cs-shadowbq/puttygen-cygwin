@@ -1,31 +1,38 @@
 # puttygen-cywin
-Steps to recreate a PPK-PEM CLI tool in cygwin
+Steps to recreate a `.PPK` -> `.PEM` CLI tool in cygwin for windows automation reasons.
 
 ## What's in the Release?
 
-SHA256(puttygen-cygnal.zip)= f9f9beddba1d5c230e1404bdb66ed5f67d4e32a8e8d484fb92951aacd8f2e3e0
+SHA256(puttygen-cygwin.zip)= 5788962752e401c197ec85dc18c33e33edbfe262646e1f2433ae9cb7b7593e92
 
 The release includes two files:
 
 * puttygen.exe - the cli 64-bit version!
-* cygwin1.dll - cygnal patch build of 2.9xx for windows distribution
+* cygwin1.dll - 2.90x branch of Cygwin (https://www.cygwin.com/)
 
 ## Origin
 
 |Arch|Tool|Sha256|Location|
 |---|---|---|---|
-|x86-64|cygnal-2-9-0-branch|46f9037d65581b2eb82f084fc53b3b6f704ec65db4ecbe27491a8d17a8cfeb5e|http://www.kylheku.com/cygnal/cygwin1-2-8-99-98-64bit.dll|
+|x86-64|cygwin2-9-0-branch||https://community.chocolatey.org/packages/Cygwin/2.9.0|
 |x86-64|putty-0.76.tar.gz|547cd97a8daa87ef71037fab0773bceb54a8abccb2f825a49ef8eba5e045713f|https://the.earth.li/~sgtatham/putty/latest/putty-0.76.tar.gz|
 
 ## Why do this?
 
  `puttygen` is a completely different tool on unix, and homebrew (macOS) than it is on Windows. 
 
+### Example Usage
 
+```
+C:\Users\Administrator>.\puttygen.exe ./my.ppk -O private-openssh -o ./pemkey.pem
+C:\Users\Administrator>.\puttygen.exe ./my.ppk -O public-openssh -o ./pemkey.pub
+```
+
+### Why Cygwin?
 
 Even the cygwin makefile is designed to compile the windows UI version. Putty has many `Makefile` for each of the diferent architectures and platforms.
 
-Cygwin requires the use of the `mgw` environment, but it doesnt map well to standard windows. By add the drop-in replacement of `cygwin` with [`cygnal`](http://www.kylheku.com/cygnal/) you can run the command from the windows or powershell terminal.
+Cygwin requires the use of the `mgw` environment, but it doesnt map well to standard windows. 
 
 Note: Why not use WSL2? WSL2 does not work in Amazon EC2 or other virtual environments easily off the shelf.
 
@@ -128,33 +135,39 @@ $ ldd /cygdrive/c/Users/Administrator/puttygen.exe
         cygwin1.dll => /usr/bin/cygwin1.dll (0x180040000)
 ```
 
-Download the pre-built binary for 2.90x support of Cygnal and rename it for reference loading
+Copy in Cygwin core dll runtime
 
 ```
 $ cd /cygdrive/c/Users/Administrator/
-$ curl -O -J -L http://www.kylheku.com/cygnal/cygwin1-2-8-99-98-64bit.dll
-$ mv cygwin1-2-8-99-98-64bit.dll cygwin1.dll
+$ mkdir puttygen-cygwin
+$ cp /usr/bin/cygwin1.dll .
 ```
 
 Package it
 
 ```shell
-$ mkdir puttygen-cygnal
-$ mv cygwin1.dll puttygen.exe puttygen-cygnal/
-$ zip -r puttygen-cygnal.zip puttygen-cygnal
-  adding: puttygen-cygnal/ (stored 0%)
-  adding: puttygen-cygnal/cygwin1.dll (deflated 64%)
-  adding: puttygen-cygnal/puttygen.exe (deflated 70%)
 
-$ openssl sha256 puttygen-cygnal.zip
-SHA256(puttygen-cygnal.zip)= f9f9beddba1d5c230e1404bdb66ed5f67d4e32a8e8d484fb92951aacd8f2e3e0
+$ mv cygwin1.dll puttygen.exe puttygen-cygwin/
+$ zip -r puttygen-cygwin.zip puttygen-cygwin
+  adding: puttygen-cygwin/ (stored 0%)
+  adding: puttygen-cygwin/cygwin1.dll (deflated 64%)
+  adding: puttygen-cygwin/puttygen.exe (deflated 70%)
+
+$ openssl sha256 puttygen-cygwin.zip
+SHA256(puttygen-cygwin.zip)= 5788962752e401c197ec85dc18c33e33edbfe262646e1f2433ae9cb7b7593e92
 ```
 
 
 ## Appendix: Installing Cygwin 2.90x Branch
 
+Install Cygwin 2.90x Branch via Chocolatey. 
+
 ```
-C:\Users\Administrator\choco install cygwin -y 
+C:\Users\Administrator\choco install cygwin -y --version=2.9.0
+C:\Users\Administrator\choco install cygwin-devel --source=cygwin
+C:\Users\Administrator\choco install gcc-core --source=cygwin
+C:\Users\Administrator\choco install make --source=cygwin
+C:\Users\Administrator\choco install zip --source=cygwin
 ```
 
 ReRun installer Selecting packages
