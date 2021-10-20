@@ -1,5 +1,5 @@
-# puttygen-cywin
-Steps to recreate a `.PPK` -> `.PEM` CLI tool in cygwin for windows automation reasons.
+# puttygen-cygwin
+Steps to recreate a `.PPK` -> `.PEM` CLI tool in cygwin for windows 64-bit automation reasons.
 
 ## What's in the Release?
 
@@ -30,11 +30,13 @@ C:\Users\Administrator>.\puttygen.exe ./my.ppk -O public-openssh -o ./pemkey.pub
 
 ### Why Cygwin?
 
-Even the cygwin makefile is designed to compile the windows UI version. Putty has many `Makefile` for each of the diferent architectures and platforms.
-
-Cygwin requires the use of the `mgw` environment, but it doesnt map well to standard windows. 
+Even the cygwin makefile putty-tools is designed to compile the Windows UI version. Putty has many `Makefile`(s) for each of the diferent architectures and platforms.
 
 Note: Why not use WSL2? WSL2 does not work in Amazon EC2 or other virtual environments easily off the shelf.
+
+#### Limitation of DLL
+
+When using the compiled binary, you must include the `cygwin1.dll` in the current folder for context dll loading, or install it into `c:\windows\system32\`
 
 ## What does it do?
 
